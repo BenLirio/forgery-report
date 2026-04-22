@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handwriting Bureau — Questioned Documents Forgery Report</title>
+  <meta property="og:title" content="Handwriting Bureau — Questioned Documents Forgery Report">
+  <meta property="og:description" content="Sign your name. The Bureau issues an official lab report with an 8-field analytics panel, a three-line forgery verdict, and a CLASSIFIED stamp.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="https://benlirio.github.io/forgery-report/favicon.jpg">
+  <meta name="theme-color" content="#a51e1a">
+  <link rel="icon" type="image/jpeg" href="favicon.jpg">
+  <link rel="apple-touch-icon" href="favicon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Special+Elite&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+  <script src="feedback.js" defer></script>
+</head>
+<body>
+  <main id="app">
+
+    <!-- SIGN screen -->
+    <section id="sign-screen" class="screen">
+      <header class="masthead">
+        <div class="rule-double"></div>
+        <p class="overline">Federal Bureau of Questioned Documents</p>
+        <h1 class="masthead-title">HANDWRITING BUREAU</h1>
+        <p class="subline">Form QD-17 &middot; Specimen Intake &middot; Examiner on Duty</p>
+        <div class="rule-double"></div>
+      </header>
+
+      <p class="instruction" id="instruction-text">Sign your name below exactly as you would a package — finger or mouse.</p>
+
+      <div class="sig-field" id="sig-field">
+        <div class="sig-corner tl"></div>
+        <div class="sig-corner tr"></div>
+        <div class="sig-corner bl"></div>
+        <div class="sig-corner br"></div>
+        <div class="sig-stub">X</div>
+        <canvas id="sig-canvas"></canvas>
+        <div class="sig-guideline"></div>
+        <p class="sig-caption">Specimen signature &mdash; examined under oath</p>
+      </div>
+
+      <div class="sign-actions">
+        <button id="clear-btn" type="button" class="ghost-btn">CLEAR</button>
+        <button id="submit-btn" type="button" class="file-btn" disabled>SUBMIT FOR EXAMINATION</button>
+      </div>
+
+      <p class="disclaimer">Not affiliated with any real bureau. Strokes are analyzed client-side. Zero signatures are retained except the one you choose to share.</p>
+    </section>
+
+    <!-- INCOMING replay screen (only shown when ?c=... in URL) -->
+    <section id="incoming-screen" class="screen hidden">
+      <header class="masthead">
+        <div class="rule-double"></div>
+        <p class="overline">Federal Bureau of Questioned Documents</p>
+        <h1 class="masthead-title">INCOMING SPECIMEN</h1>
+        <p class="subline">A prior subject has submitted a specimen for your review.</p>
+        <div class="rule-double"></div>
+      </header>
+
+      <div class="sig-field replay" id="replay-field">
+        <div class="sig-corner tl"></div>
+        <div class="sig-corner tr"></div>
+        <div class="sig-corner bl"></div>
+        <div class="sig-corner br"></div>
+        <canvas id="replay-canvas"></canvas>
+        <div class="sig-guideline"></div>
+        <p class="sig-caption">Exhibit A &mdash; specimen under examination</p>
+      </div>
+
+      <p class="incoming-caption" id="incoming-verdict"></p>
+
+      <button id="incoming-continue" type="button" class="file-btn">NOW SIGN YOUR OWN &rarr;</button>
+    </section>
+
+    <!-- LOADING screen -->
+    <section id="loading-screen" class="screen hidden">
+      <div class="loader-stack">
+        <div class="stamp-spin" aria-hidden="true">
+          <svg viewBox="0 0 140 140" width="140" height="140">
+            <defs>
+              <path id="rim" d="M70,70 m-55,0 a55,55 0 1,1 110,0 a55,55 0 1,1 -110,0"></path>
+            </defs>
+            <circle cx="70" cy="70" r="62" fill="none" stroke="#1a1a1a" stroke-width="2"></circle>
+            <circle cx="70" cy="70" r="52" fill="none" stroke="#1a1a1a" stroke-width="1"></circle>
+            <text font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="3" fill="#1a1a1a">
+              <textPath href="#rim" startOffset="0">FEDERAL BUREAU OF QUESTIONED DOCUMENTS &#9733; Q.D. &#9733; </textPath>
+            </text>
+            <text x="70" y="78" text-anchor="middle" font-family="'Playfair Display', serif" font-weight="900" font-size="26" fill="#a51e1a">Q.D.</text>
+          </svg>
+        </div>
+        <p id="loader-text" class="typewriter">measuring ink-lift intervals&hellip;</p>
+      </div>
+    </section>
+
+    <!-- REPORT (result) screen -->
+    <section id="report-screen" class="screen hidden">
+      <article id="report-doc" class="report-doc">
+        <!-- Rendered by JS -->
+      </article>
+
+      <div class="share-row">
+        <p class="share-preamble">Transmit this file to a suspect &mdash; they will see your specimen, then produce their own.</p>
+        <button onclick="share()" class="share-btn" id="share-btn">TRANSMIT TO SUSPECT</button>
+        <button id="reset-btn" type="button" class="reset-btn">Submit a new specimen</button>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
